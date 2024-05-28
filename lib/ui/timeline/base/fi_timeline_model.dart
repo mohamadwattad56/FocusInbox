@@ -4,10 +4,14 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../backend/models/cx_timeline_item.dart';
 import '../../../models/main/base/fi_model.dart';
 import '../../../models/main/fi_main_models_states.dart';
 import '../../../utils/fi_resources.dart';
+import '../../groups/fi_group.dart';
+import '../../groups/fi_groups_model.dart';
 import '../../navigationbar/contacts/fi_contacts.dart';
+import '../../utils/list/cx_expanded_groups_list.dart';
 
 
 
@@ -27,12 +31,15 @@ class FiTimelineModel extends FiModel {
 
   String get occupation => "COO - Jhonson Control" ;
 
-  //List<CxGroup> get groups => groupsModel.groups;
+  List<CxGroup> get groups => groupsModel.groups;
 
   List<FiContact> get members => <FiContact>[] ;
 
-  //final List<CxTimelineItem> _timelineItems = <CxTimelineItem>[] ;
+  final List<CxTimelineItem> _timelineItems = <CxTimelineItem>[] ;
 
+  OnGroupListItemClickCallback get showGroupTimeline => (item){};
+
+  OnGroupListItemClickCallback get showMemberTimeline => (item){};
 
 
 

@@ -5,17 +5,15 @@ import 'package:flutter_constraintlayout/flutter_constraintlayout.dart';
 import 'package:numberpicker/numberpicker.dart';
 import '../../../utils/fi_display.dart';
 import '../../../utils/fi_resources.dart';
-import '../../../utils/list/fi_multi_list_actions_data_source.dart';
-import '../../../utils/list/fi_multi_list_collapsed_widget.dart';
-import '../../../utils/list/fi_multi_list_data_source.dart';
-import '../../../utils/list/fi_multi_list_expanded_widget.dart';
-import '../../../utils/list/fi_multi_list_item.dart';
-
-import '../../../utils/list/fi_multi_type_list.dart';
 import '../../base/fi_base_state.dart';
 import '../../base/fi_base_widget.dart';
 
 import '../../utils/fi_ui_elements.dart';
+import '../../utils/list/fi_multi_list_collapsed_widget.dart';
+import '../../utils/list/fi_multi_list_data_source.dart';
+import '../../utils/list/fi_multi_list_expanded_widget.dart';
+import '../../utils/list/fi_multi_list_item.dart';
+import '../../utils/list/fi_multi_type_list.dart';
 import 'fi_settings_tab_model.dart';
 
 const emailSettingsIndex = 0;

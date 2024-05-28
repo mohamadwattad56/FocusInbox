@@ -6,10 +6,10 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../models/main/base/fi_model.dart';
 import '../../../utils/fi_log.dart';
 import '../../base/fi_base_state.dart';
-import '../../contacts/fi_contacts_tab_widget.dart';
 import '../../launching/fi_launching_model.dart';
 import 'fi_contacts_page_widget.dart';
 import 'fi_contacts.dart';
+import 'fi_contacts_tab_widget.dart';
 
 
 
@@ -164,7 +164,8 @@ class FiContactsTabModel extends FiModel {
     var status = await launchingModel.getContactPermission();
     if (status == PermissionStatus.granted) {
       List<Contact> phoneContacts = await ContactsService.getContacts();
-      phoneContacts.sort((a, b) {
+      phoneContacts.sort((a, b)
+      {
         if (a.displayName != null && b.displayName != null) {
           return a.displayName!.toLowerCase().compareTo(b.displayName!.toLowerCase());
         }
@@ -177,7 +178,7 @@ class FiContactsTabModel extends FiModel {
         if (contact.valid) {
           contact.loadData(() {
             String current = contact.name.characters.first.toUpperCase();
-            if (current != initialLetter) {
+          if (current != initialLetter) {
               initialLetter = current;
               _privateContacts.add(FiContact(type: FiContactPageType.divider, divider: initialLetter));
             }
@@ -188,10 +189,6 @@ class FiContactsTabModel extends FiModel {
     }
 
     pages.add( FiContactsPageWidget(FiContactPageType.private));
-   // pages.add( FiContactsPageWidget(FiContactPageType.business));
-    //pages.add( FiContactsPageWidget(FiContactPageType.shared));
-    //pages.add( FiContactsPageWidget(FiContactPageType.organization));
-
     _searchController = TextEditingController();
   }
 
@@ -221,7 +218,7 @@ class FiContactsTabModel extends FiModel {
     }
   }
 */
-/*  List<FiContact> get favorites {
+  List<FiContact> get favorites {
     switch (_currentPageIndex) {
       case 1:
         return _favoriteBusinessContacts;
@@ -230,13 +227,13 @@ class FiContactsTabModel extends FiModel {
       default:
         return _favoriteOrganizationContacts;
     }
-  }*/
+  }
 
-/*
+
   String get favoriteKey  => "favorite_$_currentPageIndex" ;
-*/
 
-/*  void setAsFavorite(FiContact contact) {
+
+  void setAsFavorite(FiContact contact) {
     if (!favorites.contains(contact)) {
       updatePage(callback: () {
         contact.isFavorite = true ;
@@ -250,7 +247,7 @@ class FiContactsTabModel extends FiModel {
         favorites.remove(contact);
       });
     }
-  }*/
+  }
 
 /*  void updateData(CxGroup group) {
 

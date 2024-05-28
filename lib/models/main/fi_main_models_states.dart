@@ -9,4 +9,10 @@ enum FiApplicationStates {
   navigationScreen,
   mineTimeline,
   guidanceIntroState,
+  newGroup,
+  addUsersToGroup,
+  myZones, groupTimeline,
+  customGroupsList,
+  timelineFilter,
+  contactDetails, contactsState,
 }

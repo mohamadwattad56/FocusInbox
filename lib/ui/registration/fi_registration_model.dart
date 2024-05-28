@@ -10,15 +10,15 @@ import '../../models/main/fi_main_model.dart';
 import '../../models/main/fi_main_models_states.dart';
 import '../../utils/fi_log.dart';
 import '../../utils/fi_resources.dart';
-import '../contacts/fi_contacts_tab_widget.dart';
 import '../launching/fi_launching_model.dart';
 import '../navigationbar/contacts/fi_contacts.dart';
+import '../navigationbar/contacts/fi_contacts_tab_widget.dart';
 
 class FiRegistrationModel extends FiModel {
   static final FiRegistrationModel _instance = FiRegistrationModel._internal();
 
   Timer? _resendCodeTimer;
-  int _timoutForEnableResendCode = 5*60 ; //TODO: 5 * 60
+  int _timoutForEnableResendCode = 5 ; //TODO: 5 * 60
   bool _isTimerStarted = false ;
   String? _userFirstName ;
   String? _userLastName ;
@@ -101,7 +101,7 @@ class FiRegistrationModel extends FiModel {
     update(callback: () async {
       _resendCodeInProgress = true;
       _isResendAllowed = false;
-      _timoutForEnableResendCode = 5 * 60 ; //TODO: 5 * 60
+      _timoutForEnableResendCode = 5 ; //TODO: 5 * 60
       FiBackendResponse response = await authenticationApi.registerUser(_userRegistrationModel!);
       _resendCodeInProgress = false;
       if (response.successful()) {
@@ -171,7 +171,7 @@ class FiRegistrationModel extends FiModel {
   void onRegistrationBackFromFail() async {
     update(callback: ()
     {
-      _timoutForEnableResendCode = 5 * 60 ; //TODO: 5 * 60
+      _timoutForEnableResendCode = 5  ; //TODO: 5 * 60
       _isRegistationInProgress = false;
       _verificationInProgress = false;
       _resendCodeInProgress = false;

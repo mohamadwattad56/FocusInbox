@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_constraintlayout/flutter_constraintlayout.dart';
+import '../../../models/main/Fi_main_model.dart';
 import '../../../models/main/fi_main_models_states.dart';
 import '../../../utils/fi_display.dart';
 import '../../../utils/fi_log.dart';
 import '../../../utils/fi_resources.dart';
 import '../../base/fi_base_state.dart';
 import '../../base/fi_base_widget.dart';
-import '../../contacts/fi_contacts_tab_model.dart';
-import '../../contacts/fi_contacts_tab_widget.dart';
+import '../../groups/fi_group.dart';
 import '../../utils/fi_ui_elements.dart';
+import '../cx_navigation_bar_widget.dart';
 import 'fi_contacts.dart';
+import 'fi_contacts_tab_model.dart';
+import 'fi_contacts_tab_widget.dart';
 
 class FiContactsPageWidget extends FiBaseWidget {
   final FiContactPageType type;
   FiApplicationStates? _backState;
 
-//  CxGroup? targetGroup;
+  CxGroup? targetGroup;
 
   FiContactsPageWidget(this.type, {super.key});
 
@@ -25,19 +29,19 @@ class FiContactsPageWidget extends FiBaseWidget {
     } else if (params is Map<String, dynamic>) {
       Map<String, dynamic> dictionary = params;
       _backState = dictionary.containsKey(kBackState) ? dictionary[kBackState] : null;
-      //targetGroup = dictionary.containsKey(kTargetGroup) ? dictionary[kTargetGroup] : null;
+      targetGroup = dictionary.containsKey(kTargetGroup) ? dictionary[kTargetGroup] : null;
     }
   }
 
   @override
   Future<bool> get onWillPop {
-   /* if (type == FiContactPageType.addingToGroup) {
+    if (type == FiContactPageType.addingToGroup) {
       if (_backState == null) {
-        applicationModel.currentState = CxApplicationStates.newGroup;
+        applicationModel.currentState = FiApplicationStates.newGroup;
       } else {
         applicationModel.currentState = _backState!;
       }
-    }*/
+    }
     return Future.value(false);
   }
 
@@ -68,7 +72,7 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
   Widget get content {
     return Stack(
       children: [
-      /*  Positioned(
+        Positioned(
             top: toY(50),
             left: toX(20),
             width: toX(32),
@@ -77,7 +81,7 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
                 visible: widget.type == FiContactPageType.addingToGroup,
                 child: uiElements.backButton(() async {
                   await widget.onWillPop;
-                }))),*/
+                }))),
         Positioned(
             top: toY(80),
             width: display.width,
@@ -92,7 +96,21 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
                 height: 1.33,
               ),
             ))),
-        /*
+        Positioned(
+            top: toY(113),
+            width: display.width,
+            child: Visibility(
+                visible: widget.type != FiContactPageType.addingToGroup,
+                child: Center(
+                    child: Text(
+                      pageSubTitle,
+                      style: TextStyle(
+                        color: const Color(0xFF666666),
+                        fontSize: toY(14),
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    )))),
         Positioned(
             top: toY(137),
             left: toX(35),
@@ -107,13 +125,13 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.w400,
                   ),
-                )))),*/
-    /*    Positioned(
+                )))),
+        Positioned(
             left: toX(28),
             top: toY(widget.type == FiContactPageType.addingToGroup ? 164 : 140),
             width: toX(359),
             height: toY(44),
-            child: uiElements.inputField(
+           child: uiElements.inputField(
                 controller: contacts.searchController,
                 onChange: contacts.onSearch,
                 borderRadius: 10,
@@ -130,8 +148,8 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
                   fontSize: toY(14),
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w400,
-                ))),*/
-    /*    if (contactsCount == 0)
+                ))),
+       if (contactsCount == 0)
           Positioned(
               top: toY(362),
               height: toY(100),
@@ -148,49 +166,85 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
                   height: 1,
                   letterSpacing: 1,
                 ),
-              ))),*/
-      /*  if ((contacts.favoritesCount > 0 || contactsCount > 0))
+              ))),
+        if (contactsCount > 0)
           Positioned(
             top: toY(widget.type == FiContactPageType.addingToGroup ? 228 : 204),
             left: 0,
             width: display.width,
             height: toY(480),//widget.type == FiContactPageType.addingToGroup ? 600 : 680),
             child: _contactsList(),
-          ),*/
+          ),
 
-      /*  Positioned(
+        Positioned(
           bottom: toY(0),
           left: 0,
           width: display.width,
           //height: toY(500),//widget.type == FiContactPageType.addingToGroup ? 600 : 680),
           child: uiElements.addItem(title: "Add Contact", onAdd: (){}),
-        ),*/
+        ),
+        const Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: CxNavigationBarWidget(),
+        ),
+
       ],
     );
   }
 
-/*
-  Widget _contactsList() {
-    if (Flavors.isBusiness ? (widget.type != FiContactPageType.private && widget.type != FiContactPageType.addingToGroup) : widget.type != FiContactPageType.addingToGroup) {
-      return Scrollbar(
-          controller: _scrollController1,
-          thumbVisibility: true,
-          scrollbarOrientation: ScrollbarOrientation.left,
-          child: ListView.builder(
-              controller: _scrollController1,
-              padding: EdgeInsets.only(left: toX(35), right: toX(35)),
-              itemCount: contactsCount + 1,
-              itemBuilder: (BuildContext context, int index) => index == 0
-                  ? _favoriteCollectionWidget()
-                  : Padding(
-                      padding: EdgeInsets.only(top: toY(index == 1 && contacts.favoritesCount > 0 ? 20 : 0)),
-                      child: uiElements.contactRow(index - 1, contacts.contactAtIndex(index - 1, widget.type), favoriteKey: contacts.favoriteKey, onFavoriteClick: () {
-                        contacts.setAsFavorite(contacts.contactAtIndex(index - 1, widget.type));
-                      }, favoriteVisible: true,onAddUserClick: (){
-                        applicationModel.setCurrentStateWithParams(CxApplicationStates.contactDetails, {kBackState:CxApplicationStates.navigationScreen}) ;
 
-                      }))));
-    } else {
+  /*Widget _contactsList() {
+    ScrollController scrollController = widget.type != FiContactPageType.addingToGroup? _scrollController1
+        : _scrollController2;
+
+    return Scrollbar(
+      controller: scrollController,
+      thumbVisibility: true,
+      scrollbarOrientation: ScrollbarOrientation.left,
+      child: ListView.builder(
+        controller: scrollController,
+        padding: EdgeInsets.only(left: toX(35), right: toX(35)),
+        itemCount: contactsCount,
+        itemBuilder: (BuildContext context, int index) {
+          FiContact contact = contacts.contactAtIndex(index, widget.type);
+
+          if (widget.type != FiContactPageType.addingToGroup) {
+            return Padding(
+              padding: EdgeInsets.only(top: toY(0)),
+              child: uiElements.contactRow(
+                index,
+                contact,
+                favoriteVisible: false,
+                onAddUserClick: () {
+                  applicationModel.setCurrentStateWithParams(
+                      FiApplicationStates.contactDetails,
+                      {kBackState: FiApplicationStates.navigationScreen}
+                  );
+                },
+              ),
+            );
+          } else {
+            return uiElements.contactRow(
+              index,
+              contact,
+              favoriteVisible: false,
+              addContactVisible: _selectedContacts.contains(contact),
+              addUserKey: "user_added",
+              onAddUserClick: () {
+                setState(() {
+                  widget.targetGroup?.addMember(contact);
+                  widget.onWillPop;
+                });
+              },
+            );
+          }
+        },
+      ),
+    );
+  }*/
+  Widget _contactsList() {
       return Scrollbar(
           controller: _scrollController2,
           thumbVisibility: true,
@@ -203,18 +257,12 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
                 FiContact contact = contacts.contactAtIndex(index, widget.type);
                 return uiElements.contactRow(index, contact, favoriteVisible: false, addContactVisible: _selectedContacts.contains(contact), addUserKey: "user_added", onAddUserClick: () {
                   setState(() {
-                    if (Flavors.isBusiness) {
-                      convertContactsModel.startConvert(contact, backTo: CxApplicationStates.addUsersToGroup, backOnDone: widget._backState, target: widget.targetGroup);
-                    } else {
                       widget.targetGroup?.addMember(contact);
                       widget.onWillPop;
-                    }
                   });
                 });
               }));
-    }
   }
-*/
 
 /*  Widget _favoriteCollectionWidget() {
     ConstraintId titleId = ConstraintId("titleId");

@@ -23,9 +23,8 @@ class FiAuthentication {
     FiBackendResponse? response;
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json'};
-      ///var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/registration');
-      //Uri uri = Uri.http('10.0.2.2:27345', '/user/registration');
-      Uri uri = Uri.http('192.162.1.211:3000', '/user/register');
+      Uri uri = Uri.http('10.0.2.2:27345', '/user/registration');
+     // Uri uri = Uri.http('192.162.1.211:3000', '/user/register');
       logger.d("registerUser : $uri");
       //http.post(uri, body: model.toJson(), headers: defaultHeaders);
 
@@ -64,9 +63,8 @@ class FiAuthentication {
     FiBackendResponse? response;
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json'};
-     /// var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/verification');
-     // Uri uri = Uri.http('10.0.2.2:27345',  '/user/get_status', {'uuid': uuid});
-      Uri uri = Uri.http('192.162.1.211:3000', '/user/get_status', {'uuid': uuid});
+      Uri uri = Uri.http('10.0.2.2:27345',  '/user/get_status', {'uuid': uuid});
+     // Uri uri = Uri.http('192.162.1.211:3000', '/user/get_status', {'uuid': uuid});
 
       logger.d("VerificateUser : $uri");
       // response = FiBackendResponse.fromHttpResponse(await http.get(uri, headers: defaultHeaders).timeout(const Duration(seconds: 10)));

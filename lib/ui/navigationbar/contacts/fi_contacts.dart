@@ -5,12 +5,13 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:string_validator/string_validator.dart';
 
+import '../../../backend/models/cx_group_user_model.dart';
 import '../../../backend/models/fi_user.dart';
 import '../../../backend/upload/fi_images_manager.dart';
 import '../../../utils/fi_image_data.dart';
 import '../../../utils/fi_log.dart';
 import '../../../utils/fi_resources.dart';
-import '../../contacts/fi_contacts_tab_widget.dart';
+import 'fi_contacts_tab_widget.dart';
 
 class FiContact {
   Contact? phoneContact;
@@ -24,8 +25,8 @@ class FiContact {
   String? _lastName;
   String? convertedTitle;
 
-  //String? convertedFirstName ;
-  //String? convertedLastName ;
+  String? convertedFirstName ;
+  String? convertedLastName ;
   FiImageData? _image;
 
   bool aggregated = false;
@@ -33,27 +34,8 @@ class FiContact {
   //Map<String, List<CxConvertedValue>> convertedData = {};
 
   FiUser? user;
+  CxGroupUserModel? groupUserModel ;
 
-/*  FiContact(
-      {this.phoneContact, required this.type, FiUser? user, this.divider = ""}) {
-    if (user != null) {
-      this.user = user;
-      List<String> names = user.username!.split(" ");
-      if (names.length > 1) {
-        _firstName = names[0];
-        _lastName = names[1];
-      }
-      else {
-        _firstName = user.username!;
-      }
-     *//* if (user.phonenumber != null) {
-        actualListPhones.add(Item(label: "phone", value: user.phonenumber!));
-      }*//*
-      actualListPhones.add(Item(label: "email", value: user.email));
-
-
-    }
-  }*/
   FiContact({this.phoneContact, required this.type, FiUser? user, this.divider = ""}) {
     if (user != null) {
       this.user = user;
@@ -146,6 +128,8 @@ class FiContact {
   }
 
   int get phonesCount => actualListPhones.length;
+  CxGroupUserModel? model ;
+
   bool isShared = false;
   String? id;
 
@@ -228,10 +212,10 @@ class FiContact {
       completion.call();
     }
 
- /*   convertedFirstName = firstName;
+    convertedFirstName = firstName;
     convertedLastName = lastName;
     convertedTitle = title;
-    convertedCompany = company;*/
+    //convertedCompany = company;
   }
 
   Image? get avatar => _avatar;
@@ -289,10 +273,10 @@ class FiContact {
       await imagesApi.uploadImage(id!, _image!);
     }
   }
-}
 
 
-/*  CxGroupUserModel get fromPhoneContact {
+
+  CxGroupUserModel get fromPhoneContact {
     CxGroupUserModel model = CxGroupUserModel ();
     if(phoneContact != null){
 
@@ -327,18 +311,18 @@ class FiContact {
         }
       }
 
-      model.socials ??= <String>[];
-      model.socials!.clear() ;
-      if (actualListSocial.isNotEmpty) {
+     /* model.socials ??= <String>[];
+      model.socials!.clear() ;*/
+   /*   if (actualListSocial.isNotEmpty) {
         for(Item item in actualListSocial){
           model.emails!.add(item.value!) ;
         }
-      }
-      model.company = phoneContact!.company??"" ;
+      }*/
+     // model.company = phoneContact!.company??"" ;
 
 
     }
     return model ;
-  }*/
-
+  }
+}
 

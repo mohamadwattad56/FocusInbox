@@ -12,9 +12,9 @@ import '../../utils/fi_log.dart';
 import '../../utils/fi_resources.dart';
 import '../base/fi_base_state.dart';
 import '../base/fi_base_widget.dart';
-import '../contacts/fi_contacts_tab_model.dart';
-import '../contacts/fi_contacts_tab_widget.dart';
 import '../navigationbar/contacts/fi_contacts.dart';
+import '../navigationbar/contacts/fi_contacts_tab_model.dart';
+import '../navigationbar/contacts/fi_contacts_tab_widget.dart';
 import '../navigationbar/settings/fi_settings_tab_model.dart';
 import '../utils/fi_ui_elements.dart';
 

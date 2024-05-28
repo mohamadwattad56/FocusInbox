@@ -9,7 +9,7 @@ import '../../../googleapis/fi_email_account.dart';
 import '../../../models/main/base/fi_model.dart';
 import '../../../models/main/fi_main_model.dart';
 import '../../../models/main/fi_main_models_states.dart';
-import '../../../utils/list/fi_multi_list_action.dart';
+import '../../utils/list/fi_multi_list_action.dart';
 
 class FiSettingsTabModel extends FiModel {
   static String kEmails = "kEmails";

@@ -8,6 +8,8 @@ class FiUser {
   late String token;
   String?  username;
   late String email;
+ // List<dynamic> groups = <String>[];
+    List<dynamic>? groups;
   //List<dynamic> calendars = <String>[];
   //dynamic information ;
   Map<String,dynamic>? settings ;
