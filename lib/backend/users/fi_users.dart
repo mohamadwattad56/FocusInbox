@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 import '../models/fi_user_email.dart';
 import '../models/fi_user_phone.dart';
 import '../models/fi_user_notification_settings.dart';
-
+import '../url_config.dart';
 class FiUsers {
   static final FiUsers _instance = FiUsers._internal();
 
@@ -24,8 +24,8 @@ class FiUsers {
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json',"Mail":mail};
     //  var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/information');
-      Uri uri = Uri.http('10.0.2.2:27345', '/user/information',{'email': mail});
-     // Uri uri = Uri.http('172.20.10.4:3000', '/user/info', {'email': mail});
+      //Uri uri = Uri.http('10.0.2.2:27345', '/user/information',{'email': mail});
+      Uri uri = Uri.http(baseUrl, '/user/info', {'email': mail});
 
       logger.d("loadUser url : $uri");
       response = FiBackendResponse.fromHttpResponse(await http.get(uri, headers: defaultHeaders).timeout(backendConfig.timeout));

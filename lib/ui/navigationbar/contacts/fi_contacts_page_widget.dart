@@ -7,6 +7,7 @@ import '../../../utils/fi_resources.dart';
 import '../../base/fi_base_state.dart';
 import '../../base/fi_base_widget.dart';
 import '../../groups/cx_group.dart';
+import 'fi_contacts_message_search_widget.dart';
 import 'fi_contacts_tab_model.dart';
 import 'fi_contacts_tab_widget.dart';
 import '../../utils/fi_ui_elements.dart';
@@ -66,7 +67,6 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
   }
 
   @override
-  // TODO: implement content
   Widget get content {
     return Stack(
       children: [
@@ -173,127 +173,46 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
 
 
   Widget _contactsList() {
-/*    if (widget.type != FiContactPageType.addingToGroup) {
-      return Scrollbar(
-          controller: _scrollController1,
-          thumbVisibility: true,
-          scrollbarOrientation: ScrollbarOrientation.left,
-          child: ListView.builder(
-              controller: _scrollController1,
-              padding: EdgeInsets.only(left: toX(35), right: toX(35)),
-              itemCount: contactsCount + 1,
-              itemBuilder: (BuildContext context, int index) => index == 0 ? _favoriteCollectionWidget()
-                  : Padding(
-                      padding: EdgeInsets.only(top: toY(index == 1 && contacts.favoritesCount > 0 ? 20 : 0)),
-                      child: uiElements.contactRow(index - 1, contacts.contactAtIndex(index - 1, widget.type), favoriteKey: contacts.favoriteKey, onFavoriteClick: () {
-                        contacts.setAsFavorite(contacts.contactAtIndex(index - 1, widget.type));
-                      }, favoriteVisible: true,onAddUserClick: (){
-                        applicationModel.setCurrentStateWithParams(FiApplicationStates.contactDetails, {kBackState:FiApplicationStates.navigationScreen}) ;
-
-                      }))));
-    } else {*/
-      return Scrollbar(
-          controller: _scrollController2,
-          thumbVisibility: true,
-          scrollbarOrientation: ScrollbarOrientation.left,
-          child: ListView.builder(
-              controller: _scrollController2,
-              padding: EdgeInsets.only(left: toX(35), right: toX(35)),
-              itemCount: contactsCount,
-              itemBuilder: (BuildContext context, int index) {
-                FiContact contact = contacts.contactAtIndex(index, widget.type);
-                return uiElements.contactRow(index, contact, favoriteVisible: false, addContactVisible: _selectedContacts.contains(contact), addUserKey: "user_added", onAddUserClick: () {
-                  setState(() {
-                    /*if (Flavors.isBusiness) {
-                      convertContactsModel.startConvert(contact, backTo: CxApplicationStates.addUsersToGroup, backOnDone: widget._backState, target: widget.targetGroup);
-                    } else {*/
-                      widget.targetGroup?.addMember(contact);
-                      widget.onWillPop;
-
-                  });
-                });
-              }));
- //   }
+    return Scrollbar(
+      controller: _scrollController2,
+      thumbVisibility: true,
+      scrollbarOrientation: ScrollbarOrientation.left,
+      child: ListView.builder(
+        controller: _scrollController2,
+        padding: EdgeInsets.only(left: toX(35), right: toX(35)),
+        itemCount: contactsCount,
+        itemBuilder: (BuildContext context, int index) {
+          FiContact contact = contacts.contactAtIndex(index, widget.type);
+          return uiElements.contactRow(
+            index,
+            contact,
+            favoriteVisible: false,
+            addContactVisible: _selectedContacts.contains(contact),
+            addUserKey: "user_added",
+            onAddUserClick: () {
+              setState(() {
+                widget.targetGroup?.addMember(contact);
+                widget.onWillPop;
+              });
+            },
+            onItemClick: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FiContactsMessageSearchWidget(contact: contact),
+                ),
+              ).then((_) {
+                contacts.setPageState(widget.type, this);
+              });
+            },
+          );
+        },
+      ),
+    );
   }
 
 
-/*  Widget _favoriteCollectionWidget() {
-    ConstraintId titleId = ConstraintId("titleId");
-    ConstraintId slashId = ConstraintId("slashId");
-    return ConstraintLayout(
-      width: display.width,
-      height: toY(100),
-      children: [
-        Text(
-          localise("favorites"),
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: toY(12.90),
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w500,
-            height: 1.20,
-          ),
-        ).applyConstraint(id: titleId, left: parent.left, top: parent.top),
-        Text(
-          " / ",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: toY(12.90),
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w500,
-            height: 1.20,
-          ),
-        ).applyConstraint(id: slashId, left: titleId.right, top: parent.top),
-        Text(
-          localise("recent"),
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: toY(12.90),
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w500,
-            height: 1.20,
-          ),
-        ).applyConstraint(left: slashId.right, top: parent.top),
-        Visibility(
-            visible: contacts.favoritesCount == 0,
-            child: Text(
-              localise("no_favorites"),
-              style: TextStyle(
-                color: const Color(0xFFAAAAAA),
-                fontSize: toY(12),
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w500,
-                height: 1.20,
-              ),
-            )).applyConstraint(left: parent.left, top: titleId.top, bottom: parent.bottom),
-        Visibility(
-            visible: contacts.favoritesCount > 0,
-            child: Padding(
-                padding: EdgeInsets.only(top: toY(5)),
-                child: ListView.builder(
-                    itemCount: contacts.favoritesCount,
-                    reverse: false,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      FiContact contact = contacts.favoriteAtIndex(index);
-                      return InkWell(
-                          onTap: () {
-                            if (removeButtonVisible(contact)) {
-                              setState(() {
-                                contacts.setAsFavorite(contact);
-                              });
-                            }
-                          },
-                          onLongPress: () {
-                            setState(() {
-                              _favoritesStates[contact] = !removeButtonVisible(contact);
-                            });
-                          },
-                          child: uiElements.favoriteWidget(contact, removeButtonVisible: removeButtonVisible(contact)));
-                    }))).applyConstraint(left: parent.left, top: titleId.top, bottom: parent.bottom, right: parent.right),
-      ],
-    );
-  }*/
+
 
   bool removeButtonVisible(FiContact contact) {
     if (_favoritesStates.containsValue(contact)) {

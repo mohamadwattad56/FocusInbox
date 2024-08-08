@@ -4,7 +4,7 @@ import '../../utils/fi_log.dart';
 import '../config/fi_backend_config.dart';
 import '../models/fi_backend_response.dart';
 import '../models/fi_user_registration_model.dart';
-import '../models/fi_user_verification_model.dart';
+import '../../backend/url_config.dart'; // Import the config file
 
 class FiAuthentication {
 
@@ -24,8 +24,8 @@ class FiAuthentication {
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json'};
       ///var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/registration');
-      Uri uri = Uri.http('10.0.2.2:27345', '/user/registration');
-     // Uri uri = Uri.http('172.20.10.4:3000', '/user/register');
+      //Uri uri = Uri.http('10.0.2.2:27345', '/user/register');
+      Uri uri = Uri.http(baseUrl, '/user/register');
       logger.d("registerUser : $uri");
       //http.post(uri, body: model.toJson(), headers: defaultHeaders);
 
@@ -45,8 +45,8 @@ class FiAuthentication {
     try {
       Map<String, String> defaultHeaders = {"Content-Type": "application/json", 'accept': 'application/json'};
      /// var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/verification');
-      Uri uri = Uri.http('10.0.2.2:27345',  '/user/get_status', {'uuid': uuid});
-     // Uri uri = Uri.http('172.20.10.4:3000', '/user/get_status', {'uuid': uuid});
+      //Uri uri = Uri.http('10.0.2.2:27345',  '/user/get_status', {'uuid': uuid});
+      Uri uri = Uri.http(baseUrl, '/user/get_status', {'uuid': uuid});
 
       logger.d("VerificateUser : $uri");
       // response = FiBackendResponse.fromHttpResponse(await http.get(uri, headers: defaultHeaders).timeout(const Duration(seconds: 10)));

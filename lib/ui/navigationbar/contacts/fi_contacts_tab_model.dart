@@ -11,18 +11,10 @@ import '../../launching/fi_launching_model.dart';
 import 'fi_contacts_page_widget.dart';
 import 'fi_contact.dart';
 
-
-
 class FiContactsTabModel extends FiModel {
   static final FiContactsTabModel _instance = FiContactsTabModel._internal();
   final List<FiContact> _privateContacts = <FiContact>[];
   final List<FiContact> _searchedContacts = <FiContact>[];
-  final List<FiContact> _notSharedContacts = <FiContact>[];
-  final List<FiContact> _sharedContacts = <FiContact>[];
-  final List<FiContact> _favoriteBusinessContacts = <FiContact>[];
-  final List<FiContact> _favoriteSharedContacts = <FiContact>[];
-  final List<FiContact> _favoriteOrganizationContacts = <FiContact>[];
-
   final List<FiContact> _organizationContacts = <FiContact>[];
   List<FiContactsPageWidget> pages = <FiContactsPageWidget>[];
   final Map<FiContactPageType, FiBaseState> _states = {};
@@ -43,9 +35,6 @@ class FiContactsTabModel extends FiModel {
           _searchController.text = "";
         });
       };
-
-
-
 
 
   setPageState(FiContactPageType type, FiBaseState? state) {
@@ -74,39 +63,11 @@ class FiContactsTabModel extends FiModel {
   }
 
   FiContactPageType get currentType {
-   /* switch (_currentPageIndex) {
-      case 1:
-        return FiContactPageType.business;
-      case 2:
-        return FiContactPageType.shared;
-      case 3:
-        return FiContactPageType.organization;
-    }
-    if(_states.containsKey(FiContactPageType.addingToGroup)) {
-      return FiContactPageType.addingToGroup;
-    }*/
     return FiContactPageType.private;
 
   }
 
   int get privateContactsCount => _inSearch ? _searchedContacts.length : _privateContacts.length;
-
-/*  int get businessContactsCount => _inSearch ? _searchedContacts.length : _notSharedContacts.length;
-
-  int get sharedContactsCount => _inSearch ? _searchedContacts.length : _sharedContacts.length;
-
-  int get organizationContactsCount => _inSearch ? _searchedContacts.length : _organizationContacts.length;*/
-
-/*  int get favoritesCount {
-    switch (_currentPageIndex) {
-      case 1:
-        return _favoriteBusinessContacts.length;
-      case 2:
-        return _favoriteSharedContacts.length;
-      default:
-        return _favoriteOrganizationContacts.length;
-    }
-  }*/
 
   ValueChanged<String> get onSearch => (text) {
         _inSearch = text.trim().isNotEmpty;
@@ -230,11 +191,6 @@ class FiContactsTabModel extends FiModel {
   }
 
 
-
-
-
-
-
   int get pageCount => pages.length;
 
   FiContactsPageWidget pageAtIndex(int index) =>  pages[0] ;//index < pageCount ? pages[index] : pages[0];
@@ -249,76 +205,6 @@ class FiContactsTabModel extends FiModel {
         return _privateContacts[index];
 
   }
-
-  /*FiContact favoriteAtIndex(int index) {
-    switch (_currentPageIndex) {
-      case 1:
-        return _favoriteBusinessContacts[index];
-      case 2:
-        return _favoriteSharedContacts[index];
-      default:
-        return _favoriteOrganizationContacts[index];
-    }
-  }
-*/
-/*  List<FiContact> get favorites {
-    switch (_currentPageIndex) {
-      case 1:
-        return _favoriteBusinessContacts;
-      case 2:
-        return _favoriteSharedContacts;
-      default:
-        return _favoriteOrganizationContacts;
-    }
-  }*/
-
-/*
-  String get favoriteKey  => "favorite_$_currentPageIndex" ;
-*/
-
-/*  void setAsFavorite(FiContact contact) {
-    if (!favorites.contains(contact)) {
-      updatePage(callback: () {
-        contact.isFavorite = true ;
-        //contact.properties["favorite_$_currentPageIndex"] = true ;
-        favorites.add(contact);
-      });
-    } else {
-      updatePage(callback: () {
-        contact.isFavorite = false ;
-        //contact.properties["favorite_$_currentPageIndex"] = false ;
-        favorites.remove(contact);
-      });
-    }
-  }*/
-
-/*  void updateData(CxGroup group) {
-
-    if(group.memberModels.isNotEmpty){
-      for(CxGroupUserModel model in group.memberModels){
-        var contact = FiContact(type: FiContactPageType.organization, groupUserModel: model);
-        if(group.type == CxGroupType.groupInOrganization) {
-          if(!_exist(model.id,_organizationContacts)) {
-            _organizationContacts.add(contact);
-          }
-        }
-        if(contact.isShared){
-          if(!_exist(model.id,_sharedContacts)) {
-            _sharedContacts.add(contact);
-          }
-        }
-        else {
-          if(!_exist(model.id,_notSharedContacts)) {
-            _notSharedContacts.add(contact);
-          }
-        }
-      }
-    }
-  }*/
-
-/*  bool _exist(String id,List<FiContact> list){
-    return list.where((element) => (element.groupUserModel?.id??"") == id).isNotEmpty ;
-  }*/
 }
 
 FiContactsTabModel contacts = FiContactsTabModel();

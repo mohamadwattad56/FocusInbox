@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_constraintlayout/flutter_constraintlayout.dart';
 import '../../base/fi_base_widget.dart';
@@ -6,7 +5,7 @@ import '../../../utils/fi_display.dart';
 import '../../base/fi_base_state.dart';
 import 'fi_contacts_tab_model.dart';
 
-enum FiContactPageType {current, private, divider, addingToGroup }
+enum FiContactPageType { current, private, divider, addingToGroup }
 
 class FiContactsTabWidget extends FiBaseWidget {
   const FiContactsTabWidget({super.key});
@@ -17,7 +16,7 @@ class FiContactsTabWidget extends FiBaseWidget {
 
 class _FiContactsTabState extends FiBaseState<FiContactsTabWidget> {
   int _selectedIndex = 0;
-  final CarouselController _buttonCarouselController = CarouselController();
+  final PageController _pageController = PageController(initialPage: 0);
 
   @override
   void initState() {
@@ -28,37 +27,39 @@ class _FiContactsTabState extends FiBaseState<FiContactsTabWidget> {
   @override
   void dispose() {
     contacts.setState(null);
+    _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget get content => ConstraintLayout(
-        width: matchParent,
-        height: matchParent,
-        children: [
-          Column(children: [
-            CarouselSlider.builder(
-              itemCount:contacts.pageCount ,
-              carouselController: _buttonCarouselController,
-              itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) => contacts.pageAtIndex(itemIndex),
-              options: CarouselOptions(
-                  height: toY(822),
-                  autoPlay: false,
-                  enlargeCenterPage: true,
-                  enableInfiniteScroll: false,
-                  viewportFraction: 1,
-                  aspectRatio: 1,
-                  initialPage: 0,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      display.closeKeyboard() ;
-                      contacts.currentPageIndex = index ;
-                      _selectedIndex = index;
-                    });
-                  }),
-            )
-          ]).applyConstraint(left: parent.left, right: parent.right, top: parent.top, bottom: parent.bottom, width: matchConstraint, height: matchConstraint),
-        ],
-      );
-
+    width: matchParent,
+    height: matchParent,
+    children: [
+      Column(children: [
+        Expanded(
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: contacts.pageCount,
+            itemBuilder: (BuildContext context, int index) {
+              return contacts.pageAtIndex(index);
+            },
+            onPageChanged: (index) {
+              setState(() {
+                display.closeKeyboard();
+                contacts.currentPageIndex = index;
+                _selectedIndex = index;
+              });
+            },
+          ),
+        )
+      ]).applyConstraint(
+          left: parent.left,
+          right: parent.right,
+          top: parent.top,
+          bottom: parent.bottom,
+          width: matchConstraint,
+          height: matchConstraint),
+    ],
+  );
 }

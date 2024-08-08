@@ -11,6 +11,7 @@ import '../../ui/registration/fi_grant_permission_widget.dart';
 import '../../ui/registration/fi_registration_widget.dart';
 import '../../ui/registration/fi_verification_widget.dart';
 import '../../ui/registration/fi_user_failed_login_widget.dart';
+import '../../utils/fi_log.dart';
 import 'base/fi_model.dart';
 import 'fi_main_models_states.dart';
 import '../../ui/registration/fi_user_success_login_widget.dart';
@@ -59,7 +60,7 @@ class FiMainModel extends FiModel {
   FiBaseWidget get currentPage {
     var page = _pages[_currentState];
     if (page == null) {
-      print("Warning: No page found for state $_currentState");
+      logger.d("Warning: No page found for state $_currentState");
       return _pages[_currentState]!;  // Return a default page or handle as needed
     }
     return page;

@@ -8,6 +8,8 @@ import '../../base/fi_base_widget.dart';
 import 'cx_ai_chat_item.dart';
 import 'cx_ai_tab_widget.dart';
 
+CxAiModel ai = CxAiModel();
+
 class CxAiModel extends FiModel {
   static final CxAiModel _instance = CxAiModel._internal();
   String _question = "";
@@ -40,13 +42,13 @@ class CxAiModel extends FiModel {
     update(callback: (){
       if(_question.isNotEmpty) {
         items.add(CxAiChatItem(true, _question)) ;
-        
+
         CxAiChatItem item =CxAiChatItem(false, _question) ;
         items.add(item) ;
-        
-        
+
+
         CxAiPrompt prompt = CxAiPrompt(_question) ;
-        
+
         prompt.onDataReceiver  = (answerPart){
           item.answer = answerPart ;
           update(callback: (){
@@ -54,7 +56,7 @@ class CxAiModel extends FiModel {
             state.scrollDown() ;
           }) ;
         };
-        
+
         prompt.onDoneReceiver = (){
           if(aiAnswers.containsKey(item.question)){
             aiAnswers.remove(item.question) ;
@@ -65,7 +67,7 @@ class CxAiModel extends FiModel {
             aiAnswers.remove(item.question) ;
           }
         } ;
-        
+
         aiAnswers[_question] = item ;
 
         _question = "" ;
@@ -96,5 +98,3 @@ class CxAiModel extends FiModel {
     items.clear();
   }
 }
-
-CxAiModel ai = CxAiModel();
