@@ -32,8 +32,9 @@ class FiContactsPageWidget extends FiBaseWidget {
     }
   }
 
+
   @override
-  Future<bool> get onWillPop {
+  Future<bool> get onWillPop async {
     if (type == FiContactPageType.addingToGroup) {
       if (_backState == null) {
         applicationModel.currentState = FiApplicationStates.newGroup;
@@ -41,7 +42,7 @@ class FiContactsPageWidget extends FiBaseWidget {
         applicationModel.currentState = _backState!;
       }
     }
-    return Future.value(false);
+    return true;
   }
 
   @override
@@ -85,15 +86,15 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
             width: display.width,
             child: Center(
                 child: Text(
-              pageTitle,
-              style: TextStyle(
-                color: pageTitleColor,
-                fontSize: toY(24),
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w600,
-                height: 1.33,
-              ),
-            ))),
+                  pageTitle,
+                  style: TextStyle(
+                    color: pageTitleColor,
+                    fontSize: toY(24),
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w600,
+                    height: 1.33,
+                  ),
+                ))),
 
         Positioned(
             top: toY(137),
@@ -102,15 +103,15 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
                 visible: widget.type == FiContactPageType.addingToGroup,
                 child: Center(
                     child: Text(
-                  localise("click_to_add_remove_contact"),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: toY(12),
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w400,
-                  ),
-                )))),
-         Positioned(
+                      localise("click_to_add_remove_contact"),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: toY(12),
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    )))),
+        Positioned(
             left: toX(28),
             top: toY(widget.type == FiContactPageType.addingToGroup ? 164 : 140),
             width: toX(359),
@@ -140,17 +141,17 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
               width: display.width,
               child: Center(
                   child: Text(
-                localise('nothing_here'),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: const Color(0xFF7C7878),
-                  fontSize: toY(50),
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w600,
-                  height: 1,
-                  letterSpacing: 1,
-                ),
-              ))),
+                    localise('nothing_here'),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: const Color(0xFF7C7878),
+                      fontSize: toY(50),
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                      height: 1,
+                      letterSpacing: 1,
+                    ),
+                  ))),
         if ( contactsCount > 0)
           Positioned(
             top: toY(widget.type == FiContactPageType.addingToGroup ? 228 : 204),
@@ -201,16 +202,13 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
                 MaterialPageRoute(
                   builder: (context) => FiContactsMessageSearchWidget(contact: contact),
                 ),
-              ).then((_) {
-                contacts.setPageState(widget.type, this);
-              });
+              );
             },
           );
         },
       ),
     );
   }
-
 
 
 
@@ -239,8 +237,7 @@ class _FiContactsPageState extends FiBaseState<FiContactsPageWidget> {
   }
 
   Color get pageTitleColor {
-        return const Color(0xffADADAD);
-    }
+    return const Color(0xffADADAD);
+  }
 
 }
-

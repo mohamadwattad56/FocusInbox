@@ -13,19 +13,19 @@ import '../../base/fi_base_widget.dart';
 import '../contacts/fi_contacts_tab_model.dart';
 import '../../utils/fi_ui_elements.dart';
 import '../cx_navigation_bar_model.dart';
-import 'cx_ai_bubble_clipper.dart';
-import 'cx_ai_chat_item.dart';
-import 'cx_ai_model.dart';
+import 'fi_ai_bubble_clipper.dart';
+import 'fi_ai_chat_item.dart';
+import 'fi_ai_model.dart';
 import '../../base/fi_base_state.dart';
 
-class CxAiTabWidget extends FiBaseWidget {
-  const CxAiTabWidget({super.key});
+class FiAiTabWidget extends FiBaseWidget {
+  const FiAiTabWidget({super.key});
 
   @override
-  State<StatefulWidget> createState() => CxAiTabState();
+  State<StatefulWidget> createState() => FiAiTabState();
 }
 
-class CxAiTabState extends FiBaseState<CxAiTabWidget> with SingleTickerProviderStateMixin {
+class FiAiTabState extends FiBaseState<FiAiTabWidget> with SingleTickerProviderStateMixin {
   int _inputLineNumber = 1;
   Size? textSize;
   double inputHeight = 0;
@@ -34,7 +34,8 @@ class CxAiTabState extends FiBaseState<CxAiTabWidget> with SingleTickerProviderS
   late StreamSubscription<bool> keyboardSubscription;
   final ScrollController _controller = ScrollController();
   final FocusNode _inputFocusMode = FocusNode();
-
+  final TextEditingController _textController = TextEditingController(); // Add this line
+  TextEditingController get textController => _textController;
   @override
   void initState() {
     super.initState();
@@ -51,6 +52,7 @@ class CxAiTabState extends FiBaseState<CxAiTabWidget> with SingleTickerProviderS
 
   @override
   void dispose() {
+    _textController.dispose(); // Dispose the controller when the widget is disposed
     keyboardSubscription.cancel();
     ai.setState(null);
     super.dispose();
@@ -128,179 +130,70 @@ class CxAiTabState extends FiBaseState<CxAiTabWidget> with SingleTickerProviderS
                   height: 1.43,
                 ),
               )),
-        if (ai.inChat) Positioned(top: toY(170), width: toX(374), height: toY(_keyboardIsOpen ? 371 : 460), child: _chat()),
-        Positioned(bottom: toY(_keyboardIsOpen ? 200 : 20), left: toX(15), width: toX(344), child: inputQuestionWidget())
+        if (ai.inChat)
+          Positioned(
+              top: toY(170),
+              width: toX(374),
+              height: toY(_keyboardIsOpen ? 371 : 460),
+              child: _chat()
+          ),
+        Positioned(
+            bottom: toY(_keyboardIsOpen ? 200 : 20),
+            left: toX(15),
+            width: toX(344),
+            child: inputQuestionWidget())
       ],
     );
   }
-
   void scrollDown() {
     _controller.animateTo(
       _controller.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 100),
-      curve: Curves.fastOutSlowIn,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
     );
   }
 
-  Widget _chat() {
-    return ListView.builder(controller: _controller, itemCount: ai.questionsCount, itemBuilder: (BuildContext context, int index) => chatItem(index));
-  }
 
+  Widget _chat() {
+    return ListView.builder(
+        controller: _controller,
+        itemCount: ai.questionsCount,
+        itemBuilder: (BuildContext context, int index) => chatItem(index));
+  }
   Widget chatItem(int index) {
-    Color myColor = const Color.fromRGBO(45, 57, 97, 1);
-    Color bobColor = const Color.fromRGBO(94, 161, 174, 1);
-    CxAiChatItem item = ai.items[index];
+    Color myColor = const Color.fromRGBO(45, 57, 97, 1); // User's message color
+    Color bobColor = const Color.fromRGBO(94, 161, 174, 1); // AI's message color
+    FiAiChatItem item = ai.items[index];
 
     return Padding(
-        padding: EdgeInsets.only(left: toX(10), right: toX(10)),
-        child: Container(
-            //width: display.width,
-            //height: wrapContent,
-            alignment: item.my ? Alignment.topLeft : Alignment.topRight,
-            padding: EdgeInsets.zero,
-            child: ChatBubble(
-                clipper: CxAiBubbleClipper(),
-                alignment: item.my ? Alignment.topLeft : Alignment.topRight,
-                margin: const EdgeInsets.only(top: 20),
-                backGroundColor: item.my ? myColor : bobColor,
-                child: Container(
-                  // constraints: BoxConstraints(
-                  //   maxWidth: MediaQuery.of(context).size.width,
-                  // ),
-                  decoration: ShapeDecoration(
-                      color: item.my ? myColor : bobColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(toX(14)),
-                      )),
-                  child: ConstraintLayout(
-                    children: [
-                      //).applyConstraint(left: parent.left,right: parent.right,top: parent.top,bottom: parent.bottom),
-                      Image(
-                        image: item.my ? contacts.myImage : const AssetImage("assets/images/nb_man_icon.png"),
-                        width: toX(44),
-                        height: toX(54),
-                      ).applyConstraint(left: parent.left, top: parent.top, width: toX(44), height: toX(54))
-                    ],
-                  ),
-                ))));
+      padding: EdgeInsets.only(left: toX(10), right: toX(10)),
+      child: Container(
+        alignment: item.my ? Alignment.topLeft : Alignment.topRight,
+        padding: EdgeInsets.zero,
+        child: ChatBubble(
+          clipper: CxAiBubbleClipper(),
+          alignment: item.my ? Alignment.topLeft : Alignment.topRight,
+          margin: const EdgeInsets.only(top: 20),
+          backGroundColor: item.my ? myColor : bobColor,
+          child: Container(
+            decoration: ShapeDecoration(
+              color: item.my ? myColor : bobColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(toX(14)),
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                item.my ? item.question : item.answer, // Display the question for user's bubble, answer for AI's bubble
+                style: FiAiChatItem.style,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
-
-  // Widget chatItem(int index) {
-  //   ConstraintId userImageId = ConstraintId("userImageId_$index");
-  //   ConstraintId userTitleId = ConstraintId("userTitleId_$index");
-  //   Color myColor = const Color.fromRGBO(45, 57, 97, 1);
-  //   Color bobColor = const Color.fromRGBO(94, 161, 174, 1);
-  //   CxAiChatItem item = ai.items[index];
-  //
-  //   Size boxSize = CxTextUtils.calculateTextBoxSize(
-  //       item.my ? item.question : item.question,
-  //       TextStyle(
-  //         fontSize: toY(12),
-  //         fontFamily: 'Roboto',
-  //         fontWeight: FontWeight.w500,
-  //       ),
-  //       toX(300));
-  //
-  //   double height = boxSize.height;
-  //   double width = boxSize.width;
-  //
-  //   width += toX(102);
-  //
-  //   height += toY(67);
-  //
-  //   if (!item.my) {
-  //     //width = toX(102);
-  //     Size boxSizeH = CxTextUtils.calculateTextBoxSize(
-  //         "W",
-  //         TextStyle(
-  //           fontSize: toY(12),
-  //           fontFamily: 'Roboto',
-  //           fontWeight: FontWeight.w500,
-  //         ),
-  //         toX(300));
-  //
-  //     height = item.lines * boxSizeH.height;
-  //     height += toY(67);
-  //     width += item.width;
-  //     //logger.d("Lines $lines, height = $height") ;
-  //   }
-  //
-  //   return Padding(
-  //       padding: item.my ? EdgeInsets.only(left: toX(20)) : EdgeInsets.only(right: toX(20), top: toY(20)),
-  //       child: Align(
-  //           alignment: item.my ? Alignment.centerLeft : Alignment.centerRight,
-  //           child: Container(
-  //             width: width,
-  //             height: height,
-  //             decoration: ShapeDecoration(
-  //               color: item.my ? myColor : bobColor,
-  //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(toX(14)),
-  //               ),
-  //             ),
-  //             child: ConstraintLayout(
-  //               width: width,
-  //               height: height,
-  //               children: [
-  //                 Padding(
-  //                     padding: EdgeInsets.only(left: toX(7), top: toY(10)),
-  //                     child: Image(
-  //                       image: item.my ? contacts.myImage : const AssetImage("assets/images/nb_man_icon.png"),
-  //                       width: toX(44),
-  //                       height: toX(54),
-  //                     )).applyConstraint(id: userImageId, left: parent.left, top: parent.top, width: toX(44), height: toX(54)),
-  //                 Padding(
-  //                     padding: EdgeInsets.only(left: toX(11), top: toY(10)),
-  //                     child: Text(
-  //                       item.my ? localise("you") : localise("bob"),
-  //                       style: TextStyle(
-  //                         color: Colors.white,
-  //                         fontSize: toY(14),
-  //                         fontFamily: 'Roboto',
-  //                         fontWeight: FontWeight.w700,
-  //                       ),
-  //                     )).applyConstraint(id: userTitleId, left: userImageId.right, top: userImageId.top),
-  //                 if (item.my)
-  //                   Padding(
-  //                       padding: EdgeInsets.only(left: toX(11), top: toY(10)),
-  //                       child: Text(
-  //                         item.question,
-  //                         style: TextStyle(
-  //                           color: const Color(0xFFE5E5E5),
-  //                           fontSize: toY(12),
-  //                           fontFamily: 'Roboto',
-  //                           fontWeight: FontWeight.w500,
-  //                         ),
-  //                       )).applyConstraint(left: userTitleId.left, top: userTitleId.bottom),
-  //                 if (!item.my)
-  //                   Padding(
-  //                       padding: EdgeInsets.only(left: toX(11), top: toY(10)),
-  //                       child: Text(
-  //                         item.answer,
-  //                         style: TextStyle(
-  //                           color: const Color(0xFFE5E5E5),
-  //                           fontSize: toY(12),
-  //                           fontFamily: 'Roboto',
-  //                           fontWeight: FontWeight.w500,
-  //                         ),
-  //                       )).applyConstraint(left: userTitleId.left, top: userTitleId.bottom),
-  //                 if (!item.my)
-  //                   Padding(
-  //                           padding: EdgeInsets.only(right: toX(11), top: toY(10)),
-  //                           child: uiElements.popupMenu(
-  //                               _bobMenuItems(),
-  //                               Image(
-  //                                 image: const AssetImage("assets/images/menu_dots.png"),
-  //                                 width: toX(15),
-  //                                 height: toY(42),
-  //                               ),
-  //                               BoxConstraints.tightFor(width: toX(190)),
-  //                               Offset(0, toY(30))))
-  //                       .applyConstraint(right: parent.right, top: userTitleId.top, width: toX(15), height: toY(52)),
-  //               ],
-  //             ),
-  //           )));
-  // }
 
   Widget inputQuestionWidget() {
     return Container(
@@ -375,6 +268,7 @@ class CxAiTabState extends FiBaseState<CxAiTabWidget> with SingleTickerProviderS
       builder: (BuildContext context, BoxConstraints constraints) {
         inputHeight = constraints.maxHeight;
         return uiElements.inputField(
+            controller: _textController, // Connect the TextEditingController
             focusNode: _inputFocusMode,
             hintText: localise("write_now"),
             maxLine: _inputLineNumber < 4 ? null : 4,

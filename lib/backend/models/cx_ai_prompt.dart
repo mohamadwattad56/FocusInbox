@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'cx_ai_prompt.g.dart';
 
 @JsonSerializable()
-class CxAiPrompt {
+class FiAiPrompt {
   String prompt ;
   @JsonKey(name:'n_predict')
   int nPredict ;
@@ -23,7 +23,7 @@ class CxAiPrompt {
   @JsonKey(includeToJson: false)
   VoidCallback? onErrorReceiver
   ;
-  CxAiPrompt(this.prompt,{this.nPredict = 128}) ;
+  FiAiPrompt(this.prompt,{this.nPredict = 128}) ;
 
   @JsonKey(includeFromJson: false)
   @JsonKey(includeToJson: false)

@@ -6,6 +6,7 @@ import '../../ui/launching/fi_launching_model.dart';
 import '../../ui/launching/fi_launching_widget.dart';
 
 import '../../ui/navigationbar/contacts/fi_contact.dart';
+import '../../ui/navigationbar/contacts/fi_contacts_message_search_widget.dart';
 import '../../ui/navigationbar/cx_navigation_bar_widget.dart';
 import '../../ui/registration/fi_grant_permission_widget.dart';
 import '../../ui/registration/fi_registration_widget.dart';
@@ -24,10 +25,11 @@ class FiMainModel extends FiModel {
   bool _checkingPermissionState = false;
 
 
-  FiApplicationStates _currentState = FiApplicationStates.launchingState;
-
+FiApplicationStates _currentState = FiApplicationStates.launchingState;
+//FiApplicationStates _currentState = FiApplicationStates.contactMessageSearch;
 
   FiContact? currentContact;
+  FiApplicationStates? backState;
 
   set currentState(FiApplicationStates value) {
     update(callback: () {
@@ -35,8 +37,23 @@ class FiMainModel extends FiModel {
     });
   }
 
-  setCurrentStateWithParams(FiApplicationStates value, dynamic params) {
+ /* setCurrentStateWithParams(FiApplicationStates value, dynamic params) {
     _pages[value]?.setParams(params);
+    update(callback: () {
+      _currentState = value;
+    });
+  }*/
+
+  setCurrentStateWithParams(FiApplicationStates value, dynamic params) {
+    if (params is Map<String, dynamic>) {
+      if (params.containsKey('contact')) {
+        currentContact = params['contact'] as FiContact?;
+      }
+      if (params.containsKey('backState')) {
+        backState = params['backState'] as FiApplicationStates?;
+      }
+    }
+    _pages[FiApplicationStates.contactMessageSearch] = FiContactsMessageSearchWidget(contact: null);
     update(callback: () {
       _currentState = value;
     });
@@ -50,7 +67,7 @@ class FiMainModel extends FiModel {
     _pages[FiApplicationStates.userSuccessLoginState] = const FiUserSuccessLoginWidget();
     _pages[FiApplicationStates.userFailedLoginState] = const FiUserFailedLoginWidget();
     _pages[FiApplicationStates.navigationScreen] = const FiNavigationBarWidget();
-
+    _pages[FiApplicationStates.contactMessageSearch] = const FiContactsMessageSearchWidget(contact: null);
   }
   factory FiMainModel() {
     return _instance;

@@ -27,7 +27,7 @@
   "skip": "Skip",
   "my_zone": "My Zone",
   "ask_me": "Ask me anything",
-  "ai_bob_text": "Hi my name is “Alex” i am your AI assistant!\nYou can ask me anything.\nFor example: Alex show me the summarise of the call with “Dana Jons”",
+  "ai_bob_text": "Hi my name is “Alex” i am your AI assistant!\nYou can ask me anything.\nFor example: 'What's the latest news?' or 'How do I solve this problem?'",
   "write_now": "Write now ...",
   "open_history" : "Open history",
   "all_searches_in_history": "All searches in history",

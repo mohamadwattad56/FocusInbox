@@ -26,7 +26,6 @@ class FiUsers {
     //  var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/information');
       //Uri uri = Uri.http('10.0.2.2:27345', '/user/information',{'email': mail});
       Uri uri = Uri.http(baseUrl, '/user/info', {'email': mail});
-
       logger.d("loadUser url : $uri");
       response = FiBackendResponse.fromHttpResponse(await http.get(uri, headers: defaultHeaders).timeout(backendConfig.timeout));
       if(response.successful()){

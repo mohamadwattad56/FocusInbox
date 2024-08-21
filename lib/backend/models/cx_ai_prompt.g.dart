@@ -6,12 +6,12 @@ part of 'cx_ai_prompt.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CxAiPrompt _$CxAiPromptFromJson(Map<String, dynamic> json) => CxAiPrompt(
+FiAiPrompt _$CxAiPromptFromJson(Map<String, dynamic> json) => FiAiPrompt(
       json['prompt'] as String,
       nPredict: json['n_predict'] as int? ?? 128,
     );
 
-Map<String, dynamic> _$CxAiPromptToJson(CxAiPrompt instance) =>
+Map<String, dynamic> _$CxAiPromptToJson(FiAiPrompt instance) =>
     <String, dynamic>{
       'prompt': instance.prompt,
       'n_predict': instance.nPredict,

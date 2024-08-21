@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 
 import '../../models/main/base/fi_model.dart';
 import '../base/fi_base_state.dart';
-import 'ai/cx_ai_model.dart';
-import 'ai/cx_ai_tab_widget.dart';
+import 'ai/fi_ai_model.dart';
+import 'ai/fi_ai_tab_widget.dart';
 import 'contacts/fi_contacts_tab_widget.dart';
 import 'home/cx_home_screen_tab_widget.dart';
 import 'notifications/cx_notification_tab_widget.dart';
@@ -50,7 +50,7 @@ class CxNavigationBarModel extends FiModel {
     if(state != null) {
       _tabs[0] = const CxHomeScreenTabWidget();
       _tabs[1] = FiContactsTabWidget();
-      _tabs[2] = const CxAiTabWidget();
+      _tabs[2] = const FiAiTabWidget();
       _tabs[3] = const CxNotificationsTabWidget();
       _tabs[4] = const FiSettingsTabWidget();
     }

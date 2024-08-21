@@ -26,10 +26,10 @@ class FiAuthentication {
       ///var uri = Uri(scheme:backendConfig.scheme, host: backendConfig.host, port: backendConfig.port, path: '/user/registration');
       //Uri uri = Uri.http('10.0.2.2:27345', '/user/register');
       Uri uri = Uri.http(baseUrl, '/user/register');
-      logger.d("registerUser : $uri");
+    logger.d("registerUser : $uri");
       //http.post(uri, body: model.toJson(), headers: defaultHeaders);
 
-      response = FiBackendResponse.fromHttpResponse(await http.post(uri, body: model.toJson(), headers: defaultHeaders).timeout(const Duration(seconds: 100))); //TODO : sec = 10
+      response = FiBackendResponse.fromHttpResponse(await http.post(uri, body: model.toJson(), headers: defaultHeaders).timeout(const Duration(seconds: 10)));
 
     } catch (err) {
       response = FiBackendResponse();
