@@ -9,8 +9,8 @@ import '../../utils/fi_resources.dart';
 import '../base/fi_base_state.dart';
 import '../base/fi_base_widget.dart';
 import '../utils/fi_ui_elements.dart';
-import 'cx_groups_model.dart';
-import 'cx_group.dart';
+import 'fi_groups_model.dart';
+import 'fi_group.dart';
 
 class CxGroupsWidget extends FiBaseWidget {
   const CxGroupsWidget({super.key});

@@ -48,8 +48,8 @@ class CxNavigationBarModel extends FiModel {
   setState(FiBaseState? state){
     super.setState(state) ;
     if(state != null) {
-      _tabs[0] = const CxHomeScreenTabWidget();
-      _tabs[1] = FiContactsTabWidget();
+      _tabs[1] = const FiHomeScreenTabWidget();
+      _tabs[0] = const FiContactsTabWidget();
       _tabs[2] = const FiAiTabWidget();
       _tabs[3] = const CxNotificationsTabWidget();
       _tabs[4] = const FiSettingsTabWidget();

@@ -6,7 +6,7 @@ import '../../../models/main/fi_main_models_states.dart';
 import '../../../utils/fi_image_data.dart';
 import '../../../utils/fi_resources.dart';
 import '../../../utils/list/cx_expanded_groups_list.dart';
-import '../../groups/cx_group.dart';
+import '../../groups/fi_group.dart';
 import '../base/fi_timeline_model.dart';
 
 class CxGroupTimelineModel extends FiTimelineModel {

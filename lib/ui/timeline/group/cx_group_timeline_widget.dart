@@ -12,7 +12,7 @@ import '../../../utils/list/fi_multi_list_actions_data_source.dart';
 import '../../../utils/list/fi_multi_list_collapsed_widget.dart';
 import '../../../utils/list/fi_multi_list_expanded_widget.dart';
 import '../../../utils/list/fi_multi_list_item.dart';
-import '../../groups/cx_group.dart';
+import '../../groups/fi_group.dart';
 import '../../utils/fi_ui_elements.dart';
 import '../base/cx_timeline_state.dart';
 import '../base/cx_timeline_widget.dart';

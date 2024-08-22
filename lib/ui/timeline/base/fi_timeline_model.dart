@@ -8,8 +8,8 @@ import '../../../models/main/base/fi_model.dart';
 import '../../../models/main/fi_main_models_states.dart';
 import '../../../utils/fi_resources.dart';
 import '../../../utils/list/cx_expanded_groups_list.dart';
-import '../../groups/cx_group.dart';
-import '../../groups/cx_groups_model.dart';
+import '../../groups/fi_group.dart';
+import '../../groups/fi_groups_model.dart';
 import '../../navigationbar/contacts/fi_contact.dart';
 
 

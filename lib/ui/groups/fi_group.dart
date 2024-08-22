@@ -17,7 +17,7 @@ import '../../utils/fi_image_data.dart';
 import '../../utils/list/fi_multi_list_action.dart';
 import '../navigationbar/contacts/fi_contact.dart';
 import '../utils/fi_ui_elements.dart';
-import 'newgroup/cx_new_group.dart';
+import 'newgroup/fi_new_group.dart';
 
 class FiGroup {
   static String kPrivate = "private";

@@ -6,8 +6,8 @@ import '../../models/main/fi_main_model.dart';
 import '../../models/main/fi_main_models_states.dart';
 import '../../utils/fi_log.dart';
 import '../zones/cx_custom_groups_model.dart';
-import 'cx_group.dart';
-import 'newgroup/cx_new_group.dart';
+import 'fi_group.dart';
+import 'newgroup/fi_new_group.dart';
 
 class CxCustomGroupsModel extends FiModel {
   static final CxCustomGroupsModel _instance = CxCustomGroupsModel._internal();

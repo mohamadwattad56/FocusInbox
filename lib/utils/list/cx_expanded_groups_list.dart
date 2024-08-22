@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_constraintlayout/flutter_constraintlayout.dart';
 
-import '../../ui/groups/cx_group.dart';
+import '../../ui/groups/fi_group.dart';
 import '../fi_display.dart';
 import 'fi_multi_list_expanded_widget.dart';
 

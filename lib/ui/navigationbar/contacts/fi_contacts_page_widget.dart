@@ -6,7 +6,7 @@ import '../../../utils/fi_log.dart';
 import '../../../utils/fi_resources.dart';
 import '../../base/fi_base_state.dart';
 import '../../base/fi_base_widget.dart';
-import '../../groups/cx_group.dart';
+import '../../groups/fi_group.dart';
 import 'fi_contacts_message_search_widget.dart';
 import 'fi_contacts_tab_model.dart';
 import 'fi_contacts_tab_widget.dart';

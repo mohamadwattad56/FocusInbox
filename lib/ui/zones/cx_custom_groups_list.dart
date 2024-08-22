@@ -7,8 +7,8 @@ import '../../utils/fi_display.dart';
 import '../../utils/fi_resources.dart';
 import '../base/fi_base_state.dart';
 import '../base/fi_base_widget.dart';
-import '../groups/cx_group.dart';
-import '../groups/newgroup/cx_new_group.dart';
+import '../groups/fi_group.dart';
+import '../groups/newgroup/fi_new_group.dart';
 import '../utils/fi_ui_elements.dart';
 import 'cx_custom_groups_model.dart';
 

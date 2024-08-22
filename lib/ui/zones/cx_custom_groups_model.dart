@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import '../../models/main/base/fi_model.dart';
 import '../../models/main/fi_main_model.dart';
 import '../../models/main/fi_main_models_states.dart';
-import '../groups/cx_group.dart';
+import '../groups/fi_group.dart';
 import '../timeline/group/cx_group_timeline_model.dart';
 import '../utils/fi_ui_elements.dart';
 

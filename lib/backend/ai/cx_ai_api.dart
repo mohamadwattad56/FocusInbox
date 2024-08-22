@@ -14,12 +14,12 @@ import 'package:http/http.dart' as http;
 import '../models/fi_backend_response.dart';
 import '../url_config.dart';
 
-class CxAiApi {
-  static final CxAiApi _instance = CxAiApi._internal();
+class FiAiApi {
+  static final FiAiApi _instance = FiAiApi._internal();
 
-  CxAiApi._internal();
+  FiAiApi._internal();
 
-  factory CxAiApi() {
+  factory FiAiApi() {
     return _instance;
   }
 
@@ -107,4 +107,4 @@ class CxAiApi {
 
 }
 
-CxAiApi aiApi = CxAiApi();
+FiAiApi aiApi = FiAiApi();

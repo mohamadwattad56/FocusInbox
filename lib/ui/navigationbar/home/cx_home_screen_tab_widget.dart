@@ -8,15 +8,15 @@ import '../../base/fi_base_widget.dart';
 import '../../utils/fi_ui_elements.dart';
 import 'cx_home_sceen_tab_model.dart';
 
-class CxHomeScreenTabWidget extends FiBaseWidget {
-  const CxHomeScreenTabWidget({super.key});
+class FiHomeScreenTabWidget extends FiBaseWidget {
+  const FiHomeScreenTabWidget({super.key});
 
   @override
   State<StatefulWidget> createState() => _CxHomeScreenTabState();
 }
 
-class _CxHomeScreenTabState extends FiBaseState<CxHomeScreenTabWidget> {
-  final CxHomeScreenTabModel _model = CxHomeScreenTabModel();
+class _CxHomeScreenTabState extends FiBaseState<FiHomeScreenTabWidget> {
+  final FiHomeScreenTabModel _model = FiHomeScreenTabModel();
 
   @override
   void initState() {
@@ -32,7 +32,6 @@ class _CxHomeScreenTabState extends FiBaseState<CxHomeScreenTabWidget> {
 
 
   @override
-  // TODO: implement content
   Widget get content => personalContent;
 
   Widget get businessContent {

@@ -5,7 +5,7 @@ import '../../../models/main/fi_main_models_states.dart';
 import '../../timeline/minetimeline/cx_mine_timeline_model.dart';
 import '../../utils/fi_ui_elements.dart';
 
-class CxHomeScreenTabModel extends FiModel {
+class FiHomeScreenTabModel extends FiModel {
 
   get onMyZoneClicked => (){
     applicationModel.currentState = FiApplicationStates.myZones ;
@@ -13,7 +13,7 @@ class CxHomeScreenTabModel extends FiModel {
 
   get onMyTimeLineClick => (){
     FiMineTimelineModel timelineModel = FiMineTimelineModel();
-    applicationModel.setCurrentStateWithParams(FiApplicationStates.mineTimeline, {kBackState:FiApplicationStates.navigationScreen,kTimeline:timelineModel}) ;
+  applicationModel.setCurrentStateWithParams(FiApplicationStates.mineTimeline, {kBackState:FiApplicationStates.navigationScreen,kTimeline:timelineModel}) ;
 
   };
 

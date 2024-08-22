@@ -27,7 +27,7 @@ class FiMainModel extends FiModel {
 
 FiApplicationStates _currentState = FiApplicationStates.launchingState;
 //FiApplicationStates _currentState = FiApplicationStates.contactMessageSearch;
-
+//  FiApplicationStates _currentState = FiApplicationStates.navigationScreen;
   FiContact? currentContact;
   FiApplicationStates? backState;
 
@@ -73,7 +73,6 @@ FiApplicationStates _currentState = FiApplicationStates.launchingState;
     return _instance;
   }
 
- // FiBaseWidget get currentPage => _pages[_currentState]!;//TODO:RETURN IT
   FiBaseWidget get currentPage {
     var page = _pages[_currentState];
     if (page == null) {
